@@ -1,0 +1,31 @@
+services:
+  reverse_proxy:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - frontend
+      - backend
+
+  web_server1:
+    build: ./CT519_Assignment3/CT519_Assignment2
+    networks:
+      - backend
+
+  web_server2:
+    image: nginx:latest
+    networks:
+      - backend
+    ports:
+        - "8000:80"
+    volumes:
+      - ./CT519_Assignment3/web2/html:/usr/share/nginx/html
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
